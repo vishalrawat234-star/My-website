@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal Premium Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; }
+        .navbar { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hero { 
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); 
+            color: white; padding: 60px 0; border-radius: 0 0 50px 50px; 
+        }
+        .app-card { 
+            border: none; border-radius: 20px; transition: 0.3s; 
+            background: white; padding: 20px; text-align: center;
+            height: 100%;
+        }
+        .app-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .google-btn { 
+            background-color: #ffffff; color: #444; border: 1px solid #ddd;
+            font-weight: 600; padding: 12px; border-radius: 10px; width: 100%;
+            transition: 0.3s;
+        }
+        .google-btn:hover { background-color: #f1f1f1; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="#">VISHAL STORE</a>
+            <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+        </div>
+    </nav>
+
+    <header class="hero text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Premium Apps & Tools</h1>
+            <p class="lead">Vishal Rawat Authorized Premium Access</p>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <h3 class="fw-bold mb-4">Editing Collection</h3>
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
+                <div class="app-card shadow-sm">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3554/3554861.png" width="60">
+                    <h6 class="mt-3 fw-bold">AI Photo Pro</h6>
+                    <a href="https://docs.google.com/spreadsheets/d/1A4LI8by7yqIvonvb4ID21UxJI9BlDAhK/edit?usp=drivesdk&ouid=106927445590263075042&rtpof=true&sd=true" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2">Open File</a>
+                </div>
+            </div>
+            
+            <div class="col-6 col-md-3">
+                <div class="app-card shadow-sm">
+                    <img src="https://cdn-icons-png.flaticon.com/512/711/711245.png" width="60">
+                    <h6 class="mt-3 fw-bold">Video Cut Pro</h6>
+                    <button class="btn btn-sm btn-outline-primary w-100 mt-2">Buy Now</button>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="app-card shadow-sm border border-success">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" width="60">
+                    <h6 class="mt-3 fw-bold">BG Remover AI</h6>
+                    <span class="badge bg-success mb-2">Free</span>
+                    <a href="#" target="_blank" class="btn btn-sm btn-success w-100">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0" style="border-radius: 25px;">
+                <div class="modal-body p-5 text-center">
+                    <h4 class="fw-bold mb-4">Welcome Back</h4>
+                    <button class="google-btn" id="google-login-btn">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="20" class="me-2">
+                        Sign in with Google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4S5iYii0JU8LT_DXEn8Jd6J2T6zzDsSM",
+            authDomain: "my-app-store-7349c.firebaseapp.com",
+            projectId: "my-app-store-7349c",
+            storageBucket: "my-app-store-7349c.firebasestorage.app",
+            messagingSenderId: "703949662372",
+            appId: "1:703949662372:web:91cceca6f6706d6f6a5e31",
+            measurementId: "G-C6TX12FYWK"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const loginBtn = document.getElementById('google-login-btn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                signInWithRedirect(auth, provider);
+            });
+        }
+
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    alert("Success! Swagat hai " + result.user.displayName);
+                }
+            }).catch((error) => {
+                console.error("Login Error: ", error);
+                alert("Error: " + error.message);
+            });
+    </script>
+</body>
+</html>
